@@ -68,7 +68,7 @@ class chimera_ligprep(LigandPrep):
         os.system('chimera --nogui --script "chimeraPrep.py ' +
                   'ligand.mol2 charged_ligand.mol2"' +
                   ' 1> chimeraLigPrep.stdout 2> chimeraLigPrep.stdout')
-        os.system('. /usr/local/mgltools/bin/mglenv.sh; pythonsh $MGL_ROOT/MGLToolsPckgs/AutoDockTools/Utilities24/prepare_ligand4.py -l charged_ligand.mol2 1> prepare_ligand4.stdout 2> prepare_ligand4.stderr')
+        os.system('. $MGL_ROOT/bin/mglenv.sh; pythonsh $MGL_ROOT/MGLToolsPckgs/AutoDockTools/Utilities24/prepare_ligand4.py -l charged_ligand.mol2 1> prepare_ligand4.stdout 2> prepare_ligand4.stderr')
         os.system('cp charged_ligand.pdbqt ' + out_lig_file)
 
         return True
