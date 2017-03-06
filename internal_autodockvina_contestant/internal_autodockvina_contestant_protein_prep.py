@@ -39,26 +39,10 @@ class chimera_protprep(ProteinPrep):
             of.write(chimera_prep_text)
         os.system('grep ATOM ' + protein_file + ' > stripped_protein.pdb')
         os.system('chimera --nogui --script "chimeraPrep.py stripped_protein.pdb prepared_protein.mol2" 1> chimeraPrep.stdout 2> chimeraPrep.stderr')
-        os.system('. /usr/local/mgltools/bin/mglenv.sh; $MGL_ROOT/bin/pythonsh $MGL_ROOT/MGLToolsPckgs/AutoDockTools/Utilities24/prepare_receptor4.py -r prepared_protein.mol2 1> prepare_receptor4.stdout 2> prepare_receptor4.stderr')
+        os.system('. $MGL_ROOT/bin/mglenv.sh; $MGL_ROOT/bin/pythonsh $MGL_ROOT/MGLToolsPckgs/AutoDockTools/Utilities24/prepare_receptor4.py -r prepared_protein.mol2 1> prepare_receptor4.stdout 2> prepare_receptor4.stderr')
         os.system('cp prepared_protein.pdbqt ' + prepared_protein_file)
         return True
-        '''
-        #Clean out all hetatms from original pdb
-        data = open(protein_file).readlines()
-        data = [line for line in data if not line[:6]=='HETATM']
-        with open('stripped_protein.pdb','wb') as of:
-            of.write(''.join(data))
 
-        with open('chimeraPrep.py','wb') as of:
-            of.write(chimera_prep_text) 
-        os.system('chimera --nogui --script "chimeraPrep.py ' +
-                  'stripped_protein.pdb prepared_protein.mol2' +
-                  '" >& chimeraProtPrep.out')
-        os.system('. /usr/local/mgltools/bin/mglenv.sh; pythonsh $MGL_ROOT/MGLToolsPckgs/AutoDockTools/Utilities24/prepare_receptor4.py -r prepared_protein.mol2')
-        os.system('cp prepared_protein.pdbqt ' + prepared_protein_file)
-
-        return True
-        '''
         #return super(chimera_protprep,
         #             self).receptor_scientific_prep(protein_file, 
         #                                            prepared_protein_file, 
