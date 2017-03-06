@@ -107,10 +107,10 @@ class autodockvina(Dock):
         os.system("sed -e '/ENDMDL/,$d' " + out_dock_file + " > top_pose.pdbqt")
         os.system("echo ENDMDL >> top_pose.pdbqt")
         
-        os.system('. /usr/local/mgltools/bin/mglenv.sh; python $MGL_ROOT/MGLToolsPckgs/AutoDockTools/Utilities24/pdbqt_to_pdb.py -f top_pose.pdbqt -o top_pose.pdb') 
+        os.system('. $MGL_ROOT/bin/mglenv.sh; python $MGL_ROOT/MGLToolsPckgs/AutoDockTools/Utilities24/pdbqt_to_pdb.py -f top_pose.pdbqt -o top_pose.pdb') 
         os.system("babel -ipdb top_pose.pdb -omol " + output_lig_mol)
 
-        os.system('. /usr/local/mgltools/bin/mglenv.sh; python $MGL_ROOT/MGLToolsPckgs/AutoDockTools/Utilities24/pdbqt_to_pdb.py -f ' + receptor_pdbqt + ' -o ' + output_receptor_pdb) 
+        os.system('. $MGL_ROOT/bin/mglenv.sh; python $MGL_ROOT/MGLToolsPckgs/AutoDockTools/Utilities24/pdbqt_to_pdb.py -f ' + receptor_pdbqt + ' -o ' + output_receptor_pdb) 
 
         
 
