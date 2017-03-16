@@ -35,6 +35,18 @@ class chimera_protprep(ProteinPrep):
         :param targ_info_dict: A dictionary of information about this target and the candidates chosen for docking.  
         :returns: True if preparation was successful. False otherwise.
         """
+        
+        ## Bugfix since tutorial: Skip structures with more than 1000 residues
+        ## due to autodocktools prepare_receptor4.py limitation
+        num_residues = 0
+        with open(protein_file) as of:
+            for line in of:
+                if ("ATOM" in line) and ("CA" in line):
+                    num_residues += 1
+        if num_residues > 750:
+            return False
+        ## End of bugfix
+
         with open('chimeraPrep.py', 'wb') as of:
             of.write(chimera_prep_text)
         os.system('grep ATOM ' + protein_file + ' > stripped_protein.pdb')
