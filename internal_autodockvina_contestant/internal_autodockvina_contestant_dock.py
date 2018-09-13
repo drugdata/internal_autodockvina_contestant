@@ -87,32 +87,58 @@ class autodockvina(Dock):
         :param targ_info_dict: A dictionary of information about this target and the candidates chosen for docking.
         :returns: True if docking is successful, False otherwise. Unless overwritten, this implementation always returns False
         """
-
-        print targ_info_dict
         receptor_pdbqt = tech_prepped_receptor_list[0]
         ligand_pdbqt = tech_prepped_lig_list[0]
         pocket_center = targ_info_dict['pocket_center']
         
         vina_command = ('vina --receptor ' + receptor_pdbqt + '  --ligand  ' +
                          ligand_pdbqt + ' --center_x ' + str(pocket_center[0]) +
-                        ' --center_y ' + str(pocket_center[1]) + 
-                        ' --center_z ' + str(pocket_center[2]) + 
-                        ' --size_x 10 --size_y 10 --size_z 10 --seed 999 ' +
-                        ' 1> vina.stdout 2> vina.stderr')
+                        ' --center_y ' + str(pocket_center[1]) +
+                        ' --center_z ' + str(pocket_center[2]) +
+                        ' --size_x 15 --size_y 15 --size_z 15 --seed 999 ' +
+                        ' >& vina_output')
         print "Running: " + vina_command
         os.system(vina_command)
 
         out_dock_file = ligand_pdbqt.replace('.pdbqt','_out.pdbqt')
-        
-        os.system("sed -e '/ENDMDL/,$d' " + out_dock_file + " > top_pose.pdbqt")
-        os.system("echo ENDMDL >> top_pose.pdbqt")
-        
-        os.system('. $MGL_ROOT/bin/mglenv.sh; python $MGL_ROOT/MGLToolsPckgs/AutoDockTools/Utilities24/pdbqt_to_pdb.py -f top_pose.pdbqt -o top_pose.pdb') 
-        os.system("babel -ipdb top_pose.pdb -omol " + output_lig_mol)
 
-        os.system('. $MGL_ROOT/bin/mglenv.sh; python $MGL_ROOT/MGLToolsPckgs/AutoDockTools/Utilities24/pdbqt_to_pdb.py -f ' + receptor_pdbqt + ' -o ' + output_receptor_pdb) 
 
-        
+        ## Convert the receptor to pdb
+        #intermediates_prefix = 'postdocking'
+        #output_prefix = '%s_docked' %(candidate_prefix)
+        #receptorPdbqt = out_dock_file.replace('ligand_out',candidate_name)
+        #receptorPdbqt = candidate_prefix+'.pdbqt'
+        ## This receptor pdb will be one of our final outputs
+        #outputReceptorPdb = "%s.pdb" %(output_prefix)
+        os.system('. /usr/local/mgltools/bin/mglenv.sh; python $MGL_ROOT/MGLToolsPckgs/AutoDockTools/Utilities24/pdbqt_to_pdb.py -f %s -o %s' %(receptor_pdbqt, output_receptor_pdb))
+
+        ## Then make the ligand mol
+        ## pdbqt_to_pdb.py can't split up the multiple poses in vina's output files, so we do that by hand
+        with open(out_dock_file) as fo:
+            fileData = fo.read()
+        fileDataSp = fileData.split('ENDMDL')
+
+        ## Write out each pose to its own pdb and mol file, then merge with the receptor to make the complex files.
+        for index, poseText in enumerate(fileDataSp[:-1]):
+            this_pose_pdbqt = 'ligand_pose'+str(index+1)+'.pdbqt'
+            this_pose_pdb = 'ligand_pose'+str(index+1)+'.pdb'
+            this_pose_mol = 'ligand_pose'+str(index+1)+'.mol'
+            with open(this_pose_pdbqt,'wb') as wf:
+                wf.write(poseText+'ENDMDL')
+            os.system('. /usr/local/mgltools/bin/mglenv.sh; python $MGL_ROOT/MGLToolsPckgs/AutoDockTools/Utilities24/pdbqt_to_pdb.py -f ' + this_pose_pdbqt + ' -o '+ this_pose_pdb)
+            os.system('babel -ipdb ' +this_pose_pdb + ' -omol ' + this_pose_mol)
+
+        ## Here convert our top-ranked pose to the final submission for this docking
+        ## Right now we're ignoring everything other than the top pose
+        top_intermediate_mol = 'ligand_pose1.mol'
+        os.system('cp ligand_pose1.mol ' + output_lig_mol)
+
+        #return super(autodockvina, 
+        #             self).dock(tech_prepped_lig_list,
+        #                        tech_prepped_receptor_list,
+        #                        output_receptor_pdb, 
+        #                        output_lig_mol,
+        #                        targ_info_dict=targ_info_dict)
 
 
 

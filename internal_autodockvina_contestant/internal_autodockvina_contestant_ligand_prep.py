@@ -52,7 +52,7 @@ class chimera_ligprep(LigandPrep):
         :param lig_smi_file: File containing SMILES for target ligand.  
         :param out_lig_file: The result of preparation should have this file name.  
         :param targ_info_dict: A dictionary of information about this target and the candidates chosen for docking.  
-        :returns: True if preparation was successful. False otherwise.
+        :returns: True df preparation was successful. False otherwise.
         """
 
         with open('rdkit_smiles_to_3d_sdf.py','wb') as of:
@@ -60,18 +60,28 @@ class chimera_ligprep(LigandPrep):
         with open('chimeraPrep.py','wb') as of:
             of.write(chimera_prep_text) 
 
-        os.system('python rdkit_smiles_to_3d_sdf.py ' + lig_smi_file + 
-                  ' ligand.sdf 1> rdkit_smiles_to_3d_sdf.stdout 2>' +
-                  ' rdkit_smiles_to_3d_sdf.stderr')
-        os.system('babel -isdf ligand.sdf -omol2 ligand.mol2'
-                  + ' 1> lig_sdf_to_mol2.stdout 2> lig_sdf_to_mol2.stderr')
+        #rdkitpythonpath = os.path.join(rdkit_python, PYTHON_BINARY_NAME)
+        #commands.getoutput(rdkitpythonpath + ' rdkit_smiles_to_3d_sdf.py ' +
+        os.system('python rdkit_smiles_to_3d_sdf.py ' + lig_smi_file +
+                  ' naive_3d_conf.sdf > rdkit_smiles_to_3d_sdf_out 2>&1')
+        #unprep_lig_file_2 = ligand_smile.replace('.smi','_unprep_step2.mol2')
+        os.system('babel -isdf naive_3d_conf.sdf -omol2 naive_3d_conf.mol2')
+        #unprep_lig_file = ligand_smile.replace('.smi','_unprep.mol2')
+        #commands.getoutput('babel -ismi %s -omol2 %s --gen3D' %(ligand_smile,unprep_lig_file))
+        with open('chimeraPrep.py','wb') as of:
+            of.write(chimera_prep_text)
         os.system('chimera --nogui --script "chimeraPrep.py ' +
-                  'ligand.mol2 charged_ligand.mol2"' +
-                  ' 1> chimeraLigPrep.stdout 2> chimeraLigPrep.stdout')
-        os.system('. $MGL_ROOT/bin/mglenv.sh; pythonsh $MGL_ROOT/MGLToolsPckgs/AutoDockTools/Utilities24/prepare_ligand4.py -l charged_ligand.mol2 1> prepare_ligand4.stdout 2> prepare_ligand4.stderr')
-        os.system('cp charged_ligand.pdbqt ' + out_lig_file)
+                  'naive_3d_conf.mol2 charged_3d_conf.mol2' +
+                  '" >& chimeraLigPrep.out')
+        os.system('. /usr/local/mgltools/bin/mglenv.sh; pythonsh $MGL_ROOT/MGLToolsPckgs/AutoDockTools/Utilities24/prepare_ligand4.py -l charged_3d_conf.mol2')
+        os.system('cp charged_3d_conf.pdbqt ' + out_lig_file)
 
+        #time.sleep(sleep_time) 
         return True
+            #return super(chimera_ligprep,
+            #             self).ligand_scientific_prep(lig_smi_file, 
+            #                                          out_lig_file, 
+            #                                          targ_info_dict=targ_info_dict)
 
 
 
