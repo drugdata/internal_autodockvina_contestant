@@ -38,3 +38,10 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+
+# Chimera binary
+chimera*.bin
+
+# vagrant
+.vagrant/
