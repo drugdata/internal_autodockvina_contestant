@@ -42,10 +42,17 @@ Usage
 Building the container
 ----------------------
 
-The following commands spin up a `Virtual Box <https://www.virtualbox.org>`_ virtual machine via `Vagrant <https://www.vagrantup.com>`_ with `Singularity <https://www.sylabs.io>`_ installed. A Makefile is then used to create the `Singularity <https://www.sylabs.io>`_ Container. 
+The following commands spin up a `Virtual Box <https://www.virtualbox.org>`_ virtual machine via `Vagrant <https://www.vagrantup.com>`_ with `Singularity <https://www.sylabs.io>`_ installed. A `Makefile <https://www.gnu.org/software/make/manual/make.html>`_ is then used to create the `Singularity <https://www.sylabs.io>`_ Container runnable on any machine that can run `Singularity <https://www.sylabs.io>`_. 
+
+
 
 .. code-block:: bash
-
+   git clone https://github.com/drugdata/internal_autodockvina_contestant.git
+   cd internal_autodockvina_contestant
+   #
+   # Be sure to download 64-bit Linux version of Chimera and put binary
+   # in source tree directory
+   #
    vagrant up
    vagrant ssh
    cd /vagrant
@@ -58,10 +65,12 @@ Requirements
 
 * Virtual Box https://www.virtualbox.org/
 
+* Binary of 64-bit Linux distribution of Chimera (tested with version `1.13 <https://www.cgl.ucsf.edu/chimera/cgi-bin/secure/chimera-get.py?file=linux_x86_64/chimera-1.13-linux_x86_64.bin>`_) https://www.cgl.ucsf.edu/chimera 
+
 Compatibility
 -------------
 
-Licence
+License
 -------
 
 Authors
