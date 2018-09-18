@@ -9,25 +9,57 @@ internal_autodockvina_contestant
    :target: https://travis-ci.org/cookiecutter/cookiecutter-pycustomdock
    :alt: Latest Travis CI build status
 
-Internal autodockvina contestant for D3R CELPP competition
+Containerized internal autodockvina contestant for D3R CELPP competition. 
 
 Usage
 -----
 
-Installation
-------------
+.. codeblock:: bash
+   cd /tmp
+   # get challenge data
+   challdir="1-get_challenge_data/"
+   mkdir -p $challdir
+   singularity run getchallengedata.py --unpackdir $challdir -f ~/ftp.config
 
-   python setup.py build
+   # protein prep
+   protdir="2-protein_prep/"
+   mkdir $protdir
+   singularity run internal_autodockvina_contestant_protein_prep.py --challengedata $challdir --prepdir $protdir
    
-   python setup.py bdist_wheel
+   # ligand prep
+   ligdir="3-ligand_prep/"
+   mkdir $ligdir
+   singularity run internal_autodockvina_contestant_ligand_prep.py --challengedata $challdir --prepdir $ligdir
 
+   #dock
+   dockdir="4-docking/"
+   mkdir $dockdir
+   singularity run internal_autodockvina_contestant_dock.py --protsciprepdir $protdir --ligsciprepdir $ligdir --outdir $dockdir
+
+   #upload results
+   packdir="5-pack_docking_results"
+   mkdir $packdir
+   singularity run packdockingresults.py --dockdir $dockdir --packdir $packdir --challengedata $challdir -f ~/ftp.config
+
+
+Build
+-----
+
+.. codeblock:: bash
+
+   vagrant up
+   vagrant ssh
+   cd /vagrant
+   make singularity
+   
 Requirements
 ^^^^^^^^^^^^
-* pip
-
-* wheel
 
 * D3R https://github.com/drugdata/D3R
+
+* Vagrant https://www.vagrantup.com/
+
+* Virtual Box https://www.virtualbox.org/
 
 Compatibility
 -------------
