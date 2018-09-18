@@ -39,10 +39,10 @@ Usage
    singularity run packdockingresults.py --dockdir $dockdir --packdir $packdir --challengedata $challdir -f ~/ftp.config
 
 
-Build
------
+Building the container
+----------------------
 
-The following commands spin up a Virtual Box virtual machine via Vagrant with Singularity installed. A Makefile is then used to create the Singularity Container. 
+The following commands spin up a `Virtual Box <https://www.virtualbox.org>`_ virtual machine via Vagrant with Singularity installed. A Makefile is then used to create the Singularity Container. 
 
 .. code-block:: bash
 
