@@ -14,7 +14,7 @@ Containerized internal autodockvina contestant for D3R CELPP competition.
 Usage
 -----
 
-.. codeblock:: console
+.. code-block:: bash
 
    cd /tmp
    # get challenge data
