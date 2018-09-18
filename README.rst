@@ -79,3 +79,6 @@ Authors
 -------
 
 `internal_autodockvina_contestant` was written by `Jeff Wagner <j5wagner@ucsd.edu>`_.
+
+.. _LICENSE.txt: https://github.com/drugdata/internal_autodockvina_contestant/blob/master/LICENSE.txt
+
