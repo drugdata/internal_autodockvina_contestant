@@ -45,8 +45,8 @@ Building the container
 The following commands spin up a `Virtual Box <https://www.virtualbox.org>`_ virtual machine via `Vagrant <https://www.vagrantup.com>`_ with `Singularity <https://www.sylabs.io>`_ installed. A `Makefile <https://www.gnu.org/software/make/manual/make.html>`_ is then used to create the `Singularity <https://www.sylabs.io>`_ Container runnable on any machine that can run `Singularity <https://www.sylabs.io>`_. 
 
 
-
 .. code-block:: bash
+
    git clone https://github.com/drugdata/internal_autodockvina_contestant.git
    cd internal_autodockvina_contestant
    #
