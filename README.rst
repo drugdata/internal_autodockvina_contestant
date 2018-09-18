@@ -5,7 +5,7 @@ internal_autodockvina_contestant
    :target: https://travis-ci.org/cookiecutter/cookiecutter-pycustomdock
    :alt: Latest Travis CI build status
 
-Containerized internal autodockvina contestant for D3R CELPP competition. 
+Containerized in-house AutoDock Vina contestant for `D3R CELPP <https://drugdesigndata.org/about/celpp>`_ competition. 
 
 Usage
 -----
@@ -42,7 +42,7 @@ Usage
 Building the container
 ----------------------
 
-The following commands spin up a `Virtual Box <https://www.virtualbox.org>`_ virtual machine via Vagrant with Singularity installed. A Makefile is then used to create the Singularity Container. 
+The following commands spin up a `Virtual Box <https://www.virtualbox.org>`_ virtual machine via `Vagrant <https://www.vagrantup.com>`_ with `Singularity <https://www.sylabs.io>`_ installed. A Makefile is then used to create the `Singularity <https://www.sylabs.io>`_ Container. 
 
 .. code-block:: bash
 
