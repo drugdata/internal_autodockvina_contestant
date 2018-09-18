@@ -1,10 +1,6 @@
 internal_autodockvina_contestant
 ================================
 
-.. image:: https://img.shields.io/pypi/v/internal_autodockvina_contestant.svg
-    :target: https://pypi.python.org/pypi/internal_autodockvina_contestant
-    :alt: Latest PyPI version
-
 .. image:: https://travis-ci.org/cookiecutter/cookiecutter-pycustomdock.png
    :target: https://travis-ci.org/cookiecutter/cookiecutter-pycustomdock
    :alt: Latest Travis CI build status
@@ -46,7 +42,9 @@ Usage
 Build
 -----
 
-.. codeblock:: bash
+The following commands spin up a Virtual Box virtual machine via Vagrant with Singularity installed. A Makefile is then used to create the Singularity Container. 
+
+.. code-block:: bash
 
    vagrant up
    vagrant ssh
@@ -55,8 +53,6 @@ Build
    
 Requirements
 ^^^^^^^^^^^^
-
-* D3R https://github.com/drugdata/D3R
 
 * Vagrant https://www.vagrantup.com/
 
