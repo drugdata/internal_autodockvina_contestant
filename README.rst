@@ -42,6 +42,15 @@ Usage
 Building the container
 ----------------------
 
+Build Requirements
+^^^^^^^^^^^^^^^^^^
+
+* Vagrant https://www.vagrantup.com/
+
+* Virtual Box https://www.virtualbox.org/
+
+* Binary of 64-bit Linux distribution of Chimera (tested with version `1.13 <https://www.cgl.ucsf.edu/chimera/cgi-bin/secure/chimera-get.py?file=linux_x86_64/chimera-1.13-linux_x86_64.bin>`_) https://www.cgl.ucsf.edu/chimera
+
 The following commands spin up a `Virtual Box <https://www.virtualbox.org>`_ virtual machine via `Vagrant <https://www.vagrantup.com>`_ with `Singularity <https://www.sylabs.io>`_ installed. A `Makefile <https://www.gnu.org/software/make/manual/make.html>`_ is then used to create the `Singularity <https://www.sylabs.io>`_ Container runnable on any machine that can run `Singularity <https://www.sylabs.io>`_. 
 
 
@@ -57,21 +66,14 @@ The following commands spin up a `Virtual Box <https://www.virtualbox.org>`_ vir
    vagrant ssh
    cd /vagrant
    make singularity
-   
-Requirements
-^^^^^^^^^^^^
-
-* Vagrant https://www.vagrantup.com/
-
-* Virtual Box https://www.virtualbox.org/
-
-* Binary of 64-bit Linux distribution of Chimera (tested with version `1.13 <https://www.cgl.ucsf.edu/chimera/cgi-bin/secure/chimera-get.py?file=linux_x86_64/chimera-1.13-linux_x86_64.bin>`_) https://www.cgl.ucsf.edu/chimera 
 
 Compatibility
 -------------
 
 License
 -------
+
+See LICENSE.txt_
 
 Authors
 -------
