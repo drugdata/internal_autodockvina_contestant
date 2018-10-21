@@ -7,6 +7,8 @@ internal_autodockvina_contestant
 
 Containerized in-house AutoDock Vina contestant for `D3R CELPP <https://drugdesigndata.org/about/celpp>`_ competition. 
 
+This workflow was made using the `CELPPade template <https://github.com/drugdata/cookiecutter-pycustomdock>`_. A written tutorial documenting its creation is available `here <https://docs.google.com/document/d/1iJcPUktbdrRftAA8cuVa32Ri1TPr2XvZVqTccDja2OM/edit#>`_.
+
 Usage
 -----
 
