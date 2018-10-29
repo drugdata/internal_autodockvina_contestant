@@ -13,32 +13,37 @@ Usage
 -----
 
 .. code-block:: bash
+   # This example assumes you have cloned and built the image
+   # as described in building container below and that
+   # you are in the internal_autodockvina_contestant directory
+   # and you have exited the vagrant VM
 
-   cd /tmp
+   mkdir tmp
+   cd tmp
    # get challenge data
    challdir="1-get_challenge_data/"
    mkdir -p $challdir
-   singularity run getchallengedata.py --unpackdir $challdir -f ~/ftp.config
+   singularity run ../build/internalautodockvina.img getchallengedata.py --unpackdir $challdir -f ~/ftp.config
 
    # protein prep
    protdir="2-protein_prep/"
    mkdir $protdir
-   singularity run internal_autodockvina_contestant_protein_prep.py --challengedata $challdir --prepdir $protdir
+   singularity run ../build/internalautodockvina.img internal_autodockvina_contestant_protein_prep.py --challengedata $challdir --prepdir $protdir
    
    # ligand prep
    ligdir="3-ligand_prep/"
    mkdir $ligdir
-   singularity run internal_autodockvina_contestant_ligand_prep.py --challengedata $challdir --prepdir $ligdir
+   singularity run ../build/internalautodockvina.img internal_autodockvina_contestant_ligand_prep.py --challengedata $challdir --prepdir $ligdir
 
    #dock
    dockdir="4-docking/"
    mkdir $dockdir
-   singularity run internal_autodockvina_contestant_dock.py --protsciprepdir $protdir --ligsciprepdir $ligdir --outdir $dockdir
+   singularity run ../build/internalautodockvina.img internal_autodockvina_contestant_dock.py --protsciprepdir $protdir --ligsciprepdir $ligdir --outdir $dockdir
 
    #upload results
    packdir="5-pack_docking_results"
    mkdir $packdir
-   singularity run packdockingresults.py --dockdir $dockdir --packdir $packdir --challengedata $challdir -f ~/ftp.config
+   singularity run ../build/internalautodockvina.img packdockingresults.py --dockdir $dockdir --packdir $packdir --challengedata $challdir -f ~/ftp.config
 
 
 Building the container
